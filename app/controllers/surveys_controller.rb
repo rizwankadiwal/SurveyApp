@@ -1,6 +1,5 @@
 class SurveysController < ApplicationController
   before_action :set_survey, only: [:show, :edit, :update, :destroy]
-
   # GET /surveys
   # GET /surveys.json
   def index
@@ -10,11 +9,14 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   # GET /surveys/1.json
   def show
+    @survey= Survey.find(params[:id])
+    @questions = @survey.questions
   end
 
   # GET /surveys/new
   def new
     @survey = Survey.new
+    @questions = @survey.questions.new
   end
 
   # GET /surveys/1/edit
@@ -69,6 +71,6 @@ class SurveysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
-      params.require(:survey).permit(:name, questions_attributes: [:question_content], answers_attributes: [:answer_content, :answer_type])
+      params.require(:survey).permit(:name, questions_attributes: [:id, :question_content], answers_attributes: [:id, :answer_content, :answer_type])
     end
 end
