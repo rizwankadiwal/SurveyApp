@@ -16,9 +16,19 @@
     <%= form.text_field :name, id: :survey_name %>
   </div>
 
-  <%= form.fields_for :questions do |survey_question| %>
-    <%= render "question_field", survey_question: survey_question %>
+  <%= form.fields_for :questions do |builder| %>
+    <fieldset>
+      <%= builder.label :question_content, "Question" %><br/>
+      <%= builder.text_area :question_content %><br/>
+      <%= builder.fields_for :answers do |f| %>
+        <fieldset>
+            <%= f.text_area :answer_type %>
+            <%= f.text_area :answer_content %><br/>
+        </fieldset>
+    </fieldset>
+    <% end %>
   <% end %>
+
 
   <div class="actions">
     <%= form.submit %>

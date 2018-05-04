@@ -1,4 +1,7 @@
 <fieldset>
-  <%= survey_question.label :question_content, "Question"%><br />
-  <%= survey_question.text_area :question_content %><br />
+  <%= f.label :question_content, "Question"%><br />
+  <%= f.text_area :question_content %><br />
+  <%= f.fields_for :answers do |builder| %>
+    <%= render 'answer_fields', f: builder %>
+  <% end %>
 </fieldset>

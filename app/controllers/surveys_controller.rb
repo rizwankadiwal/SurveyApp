@@ -9,14 +9,13 @@ class SurveysController < ApplicationController
   # GET /surveys/1
   # GET /surveys/1.json
   def show
-    @survey= Survey.find(params[:id])
-    @questions = @survey.questions
   end
 
   # GET /surveys/new
   def new
     @survey = Survey.new
     @questions = @survey.questions.new
+    @answers = @questions.answers.new
   end
 
   # GET /surveys/1/edit
@@ -27,7 +26,6 @@ class SurveysController < ApplicationController
   # POST /surveys.json
   def create
     @survey = Survey.new(survey_params)
-
     respond_to do |format|
       if @survey.save
         format.html { redirect_to @survey, notice: 'Survey was successfully created.' }
@@ -71,6 +69,6 @@ class SurveysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def survey_params
-      params.require(:survey).permit(:name, questions_attributes: [:id, :question_content], answers_attributes: [:id, :answer_content, :answer_type])
+      params.require(:survey).permit(:name, questions_attributes: [:id, :question_content, answers_attributes: [:id, :answer_content, :answer_type]])
     end
 end
